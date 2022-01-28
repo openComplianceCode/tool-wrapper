@@ -9,8 +9,7 @@ RUN go build
 FROM python:3.6-slim-buster as runner
 
 # Requirements as per https://scancode-toolkit.readthedocs.io/en/latest/getting-started/install.html
-RUN sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
- && apt-get update \
+RUN apt-get update \
  && apt-get install -y --no-install-recommends bzip2 xz-utils zlib1g libxml2-dev libxslt1-dev libgomp1 libpopt0 git ca-certificates gcc \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
