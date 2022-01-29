@@ -8,6 +8,8 @@ RUN go build
 
 FROM python:3.6-slim-buster as runner
 
+ARG PYPI_URL
+
 # Requirements as per https://scancode-toolkit.readthedocs.io/en/latest/getting-started/install.html
 RUN apt-get update \
  && apt-get install -y --no-install-recommends bzip2 xz-utils zlib1g libxml2-dev libxslt1-dev libgomp1 libpopt0 git ca-certificates gcc \
@@ -23,7 +25,7 @@ COPY ./scancode-toolkit /tools/scancode-toolkit
 
 
 # Run scancode once for initial configuration, with --reindex-licenses to create the base license index
-ENV PYPI_LINKS=$PYPI_URL
+ENV PYPI_LINKS=${PYPI_URL}
 
 RUN cd /tools/scancode-toolkit && ./scancode --reindex-licenses && ln -s /tools/scancode-toolkit/scancode /tools/scancode
 
